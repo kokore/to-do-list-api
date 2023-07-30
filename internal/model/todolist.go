@@ -9,9 +9,6 @@ import (
 
 type StatusType string
 
-type ToDoListSearchFilter struct {
-}
-
 const (
 	IN_PROGRESS StatusType = "IN_PROGRESS"
 	COMPLETED   StatusType = "COMPLETED"

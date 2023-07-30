@@ -35,9 +35,7 @@ func (req ToDoListRequest) validate() map[string]string {
 }
 
 type GetToDoListRequest struct {
-	StatusQueryParam queryParams.StatusQueryParam
-	TitleQueryParam  queryParams.TitleQueryParam
-	DateQueryParam   queryParams.DateQueryParam
+	OrderQueryParam  queryParams.OrderQueryParam
 	SearchQueryParam queryParams.SearchQueryParam
 }
 

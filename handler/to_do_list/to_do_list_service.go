@@ -9,11 +9,12 @@ import (
 
 func FindAllToDoListToDB(params GetToDoListRequest) ([]model.ToDoListDTO, error) {
 	filter := bson.M{}
+	sort := bson.D{}
 
-	sort := bson.D{
-		{"title", utils.SortConditions(*params.TitleQueryParam.GetTitleTypeByDefault())},
-		{"date", utils.SortConditions(*params.DateQueryParam.GetDateTypeByDefault())},
-		{"status", utils.SortConditions(*params.StatusQueryParam.GetStatusTypeByDefault())},
+	if params.OrderQueryParam.GetOrderTypeByDefault() != "" {
+		sort = bson.D{
+			{Key: params.OrderQueryParam.OrderBy, Value: utils.SortConditions(params.OrderQueryParam.GetOrderTypeByDefault())},
+		}
 	}
 
 	if params.SearchQueryParam.HasSearchText() {
