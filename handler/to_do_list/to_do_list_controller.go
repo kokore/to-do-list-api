@@ -92,13 +92,13 @@ func UpdateToDoListById(c *gin.Context) {
 
 	var params ToDoListIdRequest
 	if err := c.ShouldBindUri(&params); err != nil {
-		c.JSON(http.StatusBadGateway, response.Err(response.InvalidRequestJSONString, http.StatusNotFound, ""))
+		c.JSON(http.StatusBadRequest, response.Err(response.InvalidRequestJSONString, http.StatusNotFound, ""))
 		return
 	}
 
 	idToUpdate, err := primitive.ObjectIDFromHex(params.ID)
 	if err != nil {
-		c.JSON(http.StatusBadGateway, response.Err(response.InvalidRequestJSONString, http.StatusNotFound, ""))
+		c.JSON(http.StatusBadRequest, response.Err(response.InvalidRequestJSONString, http.StatusNotFound, ""))
 		return
 	}
 
