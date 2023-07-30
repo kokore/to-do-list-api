@@ -266,7 +266,7 @@ func TestCreateToDoListSuccess(t *testing.T) {
 	assert.Equal(t, http.StatusOK, recorder.Code, "Response status code should be 200")
 }
 
-func TestCreateToDoListFail(t *testing.T) {
+func TestCreateToDoListBodyMissingFail(t *testing.T) {
 	r := gin.Default()
 	r.POST("/api/v1/to-do-list", toDoList.CreateToDoList)
 
@@ -282,6 +282,33 @@ func TestCreateToDoListFail(t *testing.T) {
 	}
 
 	requestBody := []byte(`{ ""description": "d", "image": "d", "status": "IN_PROGRESS" }`)
+
+	req, err := http.NewRequest("POST", "/api/v1/to-do-list", bytes.NewBuffer(requestBody))
+	assert.NoError(t, err, "Error creating request")
+
+	recorder := httptest.NewRecorder()
+
+	r.ServeHTTP(recorder, req)
+
+	assert.Equal(t, http.StatusBadRequest, recorder.Code, "Response status code should be 400")
+}
+
+func TestCreateToDoListStatusWrongFail(t *testing.T) {
+	r := gin.Default()
+	r.POST("/api/v1/to-do-list", toDoList.CreateToDoList)
+
+	os.Setenv("TZ", "Asia/Bangkok")
+
+	err := config.InitConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := logz.Init(); err != nil {
+		log.Fatal(err)
+	}
+
+	requestBody := []byte(`{ ""description": "d", "image": "d", "status": "IN_PROGRESSSSS" }`)
 
 	req, err := http.NewRequest("POST", "/api/v1/to-do-list", bytes.NewBuffer(requestBody))
 	assert.NoError(t, err, "Error creating request")
