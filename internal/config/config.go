@@ -16,6 +16,7 @@ type ConfigType struct {
 type AppConfig struct {
 	Name string
 	Port string
+	Env  string
 }
 
 type LogConfig struct {
