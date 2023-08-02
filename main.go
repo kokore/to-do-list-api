@@ -6,8 +6,8 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/hugeman/todolist/handler/middleware"
 	toDoList "github.com/hugeman/todolist/handler/to_do_list"
 	"github.com/hugeman/todolist/internal/config"
 	"github.com/hugeman/todolist/internal/logz"
@@ -41,7 +41,8 @@ func initial() {
 func getGinEngine() *gin.Engine {
 	router := gin.Default()
 
-	router.Use(middleware.CORS())
+	//router.Use(middleware.CORS())
+	router.Use(cors.Default())
 
 	root := router.Group("/api/v1")
 
